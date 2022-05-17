@@ -12,7 +12,7 @@ FROM mcr.microsoft.com/dotnet/aspnet:3.1 AS final
 WORKDIR /app
 COPY --from=build-env /app/out .
 
-LABEL io.k8s.display-name="dotnet-311-git" \
+LABEL io.k8s.display-name="dotnet-311-git1" \
       io.k8s.description="container description..." \
       io.openshift.expose-services="8080:http"
 
