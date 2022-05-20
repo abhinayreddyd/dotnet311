@@ -5,11 +5,13 @@ COPY *.csproj ./
 RUN dotnet restore
 
 COPY . ./
-RUN dotnet publish -c Release -o out
+RUN dotnet publish -c Release -o out --no-restore
 
-FROM mcr.microsoft.com/dotnet/aspnet:3.1 as final
+FROM mcr.microsoft.com/dotnet/runtime:3.1 as final
 WORKDIR /app
+COPY --from=build-env /app/out .
+
 EXPOSE 8080
 ENV ASPNETCORE_URLS=http://*:8080
-COPY --from=build-env /app/out .
+
 ENTRYPOINT ["dotnet", "sampledb31.dll"]
