@@ -5,7 +5,7 @@ COPY *.csproj ./
 RUN dotnet restore
 
 COPY . ./
-RUN dotnet publish -c Release -o out --no-restore
+RUN dotnet publish -c Release -o out
 
 FROM mcr.microsoft.com/dotnet/runtime:3.1 as final
 WORKDIR /app
