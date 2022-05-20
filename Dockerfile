@@ -1,7 +1,7 @@
 FROM mcr.microsoft.com/dotnet/aspnet:3.1-buster-slim AS base
 WORKDIR /app
 
-FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS build
+FROM mcr.microsoft.com/dotnet/sdk:3.1-buster AS build
 WORKDIR /src
 COPY ["sampledb31.csproj", ""]
 RUN dotnet restore "./sampledb31.csproj"
