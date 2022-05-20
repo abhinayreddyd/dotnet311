@@ -1,16 +1,20 @@
-FROM mcr.microsoft.com/dotnet/sdk:3.1 AS build-env
+FROM mcr.microsoft.com/dotnet/core/aspnet:3.1-buster-slim AS base
 WORKDIR /app
 
-COPY . ./
-RUN dotnet restore
+FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS build
+WORKDIR /src
+COPY ["sampledb31.csproj", ""]
+RUN dotnet restore "./sampledb31.csproj"
+COPY . .
+WORKDIR "/src/."
+RUN dotnet build "sampledb31.csproj" -c Release -o /app/build
 
-RUN dotnet publish -c Release -o out
+FROM build AS publish
+RUN dotnet publish "sampledb31.csproj" -c Release -o /app/publish
 
-FROM mcr.microsoft.com/dotnet/aspnet:3.1 AS final
+FROM base AS final
 WORKDIR /app
-COPY --from=build-env /app/out .
-
+COPY --from=publish /app/publish .
 EXPOSE 8080
 ENV ASPNETCORE_URLS=http://*:8080
-
 ENTRYPOINT ["dotnet", "sampledb31.dll"]
