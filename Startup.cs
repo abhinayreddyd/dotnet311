@@ -26,9 +26,9 @@ namespace sampledb31
         {
             services.AddControllersWithViews();
 
-            //services.AddDbContext<DbContextnew>(options =>
-                   // options.UseSqlServer(Configuration.GetConnectionString("DbContextnew")));
-            services.AddDbContext<DbContextnew>(opt => opt.UseInMemoryDatabase("InMemDbContextnew"));
+            services.AddDbContext<DbContextnew>(options =>
+                   options.UseSqlServer(Configuration.GetConnectionString("DbContextnew")));
+            // services.AddDbContext<DbContextnew>(opt => opt.UseInMemoryDatabase("InMemDbContextnew"));
 
 
         }
